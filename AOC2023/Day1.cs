@@ -15,10 +15,22 @@ namespace AOC2023
             // Act
             var result = solver.Solve(exampleInput);
 
-            Console.WriteLine($"RESULT ======== {result}");
+            // Console.WriteLine($"RESULT ======== {result}");
 
             // Assert
             Assert.Equal(142, result);
+        }
+
+        [Fact]
+        public void AnswerPart1() {
+            var solver = new Day1Solver();
+
+            var input = Helper.GetInput("input", "day1.txt");
+
+            var result = solver.Solve(input);
+
+            Console.WriteLine($"ANSEWWR === {result}");
+            Assert.Equal(54388, result);
         }
 
         public class Day1Solver()
