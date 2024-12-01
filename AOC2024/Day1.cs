@@ -47,7 +47,8 @@ public class Day1
         return list;
     }
 
-    public int CalculateDifferenceSum(int[] left, int[] right) {
+    public int CalculateDifferenceSum(int[] left, int[] right)
+    {
         List<int> diff = [];
         for (int i = 0; i < left.Length; i++)
         {
@@ -68,6 +69,42 @@ public class Day1
         var sortedRight = BubbleSort(lists.ToArray()[1]);
 
         Assert.Equal(11, CalculateDifferenceSum(sortedLeft.ToArray(), sortedRight.ToArray()));
+    }
+
+    [Fact]
+    [Trait("Day1", "Example_Part2")]
+    public void Example_Part2()
+    {
+        string[] input = Utility.GetInput("example", "day1.txt");
+        var lists = setLocationIDsIntoLists(input);
+        var left = lists.ToArray()[0];
+        var right = lists.ToArray()[1];
+
+        int similarityScore = 0;
+        foreach (int num in left)
+        {
+            similarityScore += right.Where(r => r == num).Sum();
+        }
+
+        Assert.Equal(31, similarityScore);
+    }
+
+    [Fact]
+    [Trait("Day1", "Solution_Part2")]
+    public void Solution_Part2()
+    {
+        string[] input = Utility.GetInput("input", "day1.txt");
+        var lists = setLocationIDsIntoLists(input);
+        var left = lists.ToArray()[0];
+        var right = lists.ToArray()[1];
+
+        int similarityScore = 0;
+        foreach (int num in left)
+        {
+            similarityScore += right.Where(r => r == num).Sum();
+        }
+
+        Assert.Equal(22539317, similarityScore);
     }
 
     [Fact]
