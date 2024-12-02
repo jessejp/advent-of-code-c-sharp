@@ -33,33 +33,46 @@ public class Day2
 
     public ReportResult CheckReportResult(ImmutableArray<int> report)
     {
-        ReportResult result = ReportResult.Undecided;
+        List<ReportResult> results = [];
 
         for (int i = 1; i < report.Length; i++)
         {
             int diff = int.Abs(report[i - 1] - report[i]);
             // Console.WriteLine($"i: {report[i - 1]}-{report[i]} diff {diff}");
+            Console.WriteLine(results.ToArray().Length);
             if (diff > maxDataDiffer || diff < minDataDiffer)
             {
-                result = ReportResult.Unsafe;
+                results.Add(ReportResult.Unsafe);
+                Console.WriteLine(results.ToArray()[i - 1]);
                 break;
             }
-            else if (((i > 1 && result == ReportResult.AllIncreasing) || i == 1) && report[i] > report[i - 1])
+            else if (report[i] > report[i - 1])
             {
-                result = ReportResult.AllIncreasing;
+                results.Add(ReportResult.AllIncreasing);
             }
-            else if (((i > 1 && result == ReportResult.AllDecreasing) || i == 1) && report[i] < report[i - 1])
+            else if (report[i] < report[i - 1])
             {
-                result = ReportResult.AllDecreasing;
+                results.Add(ReportResult.AllDecreasing);
             }
             else
             {
-                result = ReportResult.Unsafe;
+                results.Add(ReportResult.Unsafe);
                 break;
             }
         }
-
-        return result;
+        var types = results.GroupBy(result => result).Select(group => new { Result = group.Key, Count = group.Count() }).OrderBy((o) => o.Count);
+        if (types.Count() > 2)
+        {
+            return ReportResult.Unsafe;
+        }
+        else if (types.Count() == 2)
+        {
+            return types.First().Result;
+        }
+        else
+        {
+            return results.First();
+        }
     }
 
     [Fact]
