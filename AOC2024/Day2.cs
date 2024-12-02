@@ -61,17 +61,15 @@ public class Day2
             }
         }
         var types = results.GroupBy(result => result).Select(group => new { Result = group.Key, Count = group.Count() }).OrderBy((o) => o.Count);
-        if (types.Count() > 2)
-        {
-            return ReportResult.Unsafe;
-        }
-        else if (types.Count() == 2)
+        if (types.Count() == 2 && types.Last().Count == 1)
         {
             return types.First().Result;
         }
-        else
+        else if (types.Count() == 1)
         {
             return results.First();
+        } else {
+            return ReportResult.Unsafe;
         }
     }
 
